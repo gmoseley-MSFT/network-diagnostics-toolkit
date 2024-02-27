@@ -1,3 +1,6 @@
+- **Script**:
+https://github.com/gmoseley-MSFT/network-diagnostics-toolkit/blob/main/capture-response-times.sh
+
 - **Set capture duration**:
   - Capture duration is set to the first script argument or defaults to 60 seconds if not specified.
 
