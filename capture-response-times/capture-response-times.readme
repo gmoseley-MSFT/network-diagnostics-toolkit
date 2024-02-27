@@ -1,0 +1,41 @@
+- **Script**:
+https://github.com/gmoseley-MSFT/network-diagnostics-toolkit/blob/main/capture-response-times.sh
+
+- **Set capture duration**:
+  - Capture duration is set to the first script argument or defaults to 60 seconds if not specified.
+
+- **Prepare capture folder**:
+  - Ensure the capture folder `/root/captures` exists, creating it if necessary.
+
+- **Define cleanup function** (`cleanup_old_captures`):
+  - Lists and deletes all capture files not containing "failure" in their names, keeping files with "failure" untouched.
+
+- **Continuous capture and monitoring loop**:
+  - **Prepare new capture file**:
+    - Names the new capture file with the current date and time.
+
+  - **Start tcpdump capture**:
+    - Begins a tcpdump capture, saving output to the new capture file, and runs it in the background.
+    - Captures the PID of the tcpdump process.
+
+- **Monitor network requests**:
+    - Periodically checks if a network request to `https://login.microsoft.com` takes longer than 3 seconds.
+    - If a request is slow or fails:
+      - Sets an error flag.
+      - Breaks the monitoring loop.
+    - Otherwise, continues monitoring until the capture duration ends.
+
+- **Stop tcpdump capture**:
+    - Kills the tcpdump process and waits for it to exit.
+    - Announces the capture completion and file location.
+
+- **Handle errors**:
+    - If an error occurred:
+      - Copies the capture file, appending "failure" to its name.
+      - Notifies of the error and the location of the copied capture file.
+
+- **Cleanup old captures**:
+    - Calls `cleanup_old_captures` to delete old capture files, keeping only captures involving "failure".
+
+- **Repeat**:
+  - The loop continues indefinitely, starting a new capture sequence.
