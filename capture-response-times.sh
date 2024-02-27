@@ -11,10 +11,6 @@ cleanup_old_captures() {
     ls -t "$capture_folder"/cx-tcpdump-*.pcap | grep -v "failure" | xargs -r rm --
 }
 
-
-# Initial cleanup in case the script is restarted, ensuring only up to three files are kept at the start
-cleanup_old_captures
-
 # Main capture and monitoring loop
 while :; do
     # Prepare for the new capture file
